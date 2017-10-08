@@ -1,0 +1,20 @@
+apply plugin: "maven-publish"
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+		}
+	}
+	repositories {
+		if (project.hasProperty("mavenUser")) {
+			maven {
+				url "sftp://maven.shadowfacts.net:22/home/maven/maven/"
+				credentials {
+					username project.mavenUser
+					password project.mavenPassword
+				}
+			}
+		}
+	}
+}
